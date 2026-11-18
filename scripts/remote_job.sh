@@ -2,7 +2,8 @@
 # Runs ON the Colab VM, from /content/app (started by scripts/colab_train.sh).
 #
 #   remote_job.sh smoke                       sampled users, 1 short epoch, no upload
-#   remote_job.sh full [--push-to-hub REPO]   full data, train, evaluate, package (+ private upload)
+#   remote_job.sh full [package args] [-- train args]
+#                                             full data, train, evaluate, package (+ private upload)
 #   remote_job.sh ablations                   ID-only, MovieLens-only and Amazon-only models
 set -euo pipefail
 MODE="${1:-full}"
@@ -35,11 +36,15 @@ case "$MODE" in
     demo outputs/hub
     ;;
   full)
+    PKG=(); TRN=(); after=0
+    for a in "$@"; do
+      if [[ "$a" == "--" ]]; then after=1; elif (( after )); then TRN+=("$a"); else PKG+=("$a"); fi
+    done
     python -m src.prepare
     python -m src.embed_items
-    python -m src.train
+    python -m src.train "${TRN[@]}"
     python -m src.evaluate
-    python -m src.package "$@"
+    python -m src.package "${PKG[@]}"
     demo outputs/hub
     ;;
   ablations)

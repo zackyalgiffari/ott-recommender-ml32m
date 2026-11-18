@@ -55,7 +55,7 @@ def build(model_dir: Path, processed: Path, out: Path) -> Path:
     return out
 
 
-def push(folder: Path, repo_id: str, message: str) -> None:
+def push(folder: Path, repo_id: str, message: str, revision: str | None = None) -> None:
     from huggingface_hub import HfApi
 
     token = None
@@ -65,8 +65,12 @@ def push(folder: Path, repo_id: str, message: str) -> None:
     api = HfApi(token=token)
     # Created private; the visibility is changed separately once the release is reviewed.
     api.create_repo(repo_id, repo_type="model", private=True, exist_ok=True)
-    api.upload_folder(repo_id=repo_id, folder_path=str(folder), repo_type="model", commit_message=message)
-    print(f"[hub] pushed to https://huggingface.co/{repo_id}", flush=True)
+    if revision:  # candidate models go to a branch, never over main
+        api.create_branch(repo_id, branch=revision, repo_type="model", exist_ok=True)
+    api.upload_folder(repo_id=repo_id, folder_path=str(folder), repo_type="model", commit_message=message,
+                      revision=revision)
+    print(f"[hub] pushed to https://huggingface.co/{repo_id}" + (f" (branch {revision})" if revision else ""),
+          flush=True)
 
 
 def main() -> None:
@@ -75,6 +79,7 @@ def main() -> None:
     p.add_argument("--sample-users", type=int, default=None)
     p.add_argument("--out", type=Path, default=Path("outputs/hub"))
     p.add_argument("--push-to-hub", metavar="REPO_ID")
+    p.add_argument("--revision", default=None, help="push to this branch instead of main")
     p.add_argument("--message", default="Upload OTT hybrid recommender")
     args = p.parse_args()
 
@@ -82,7 +87,7 @@ def main() -> None:
     size = sum(f.stat().st_size for f in out.rglob("*") if f.is_file()) / 1e6
     print(f"[package] {out} ({size:.0f} MB): " + ", ".join(sorted(f.name for f in out.iterdir())), flush=True)
     if args.push_to_hub:
-        push(out, args.push_to_hub, args.message)
+        push(out, args.push_to_hub, args.message, args.revision)
 
 
 if __name__ == "__main__":
