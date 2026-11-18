@@ -13,12 +13,10 @@ import json
 from pathlib import Path
 
 import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-
-from src.config import DOMAINS, RESULTS_DIR, processed_dir  # noqa: E402
+from src.config import DOMAINS, RESULTS_DIR, processed_dir
 
 SURFACE, GRID = "#fcfcfb", "#e6e5e0"
 TEXT, TEXT2 = "#0b0b0b", "#52514e"
@@ -27,7 +25,8 @@ ACCENT, MUTED = "#2a78d6", "#b9b8b1"
 LABEL = {"movielens": "MovieLens-32M", "amazon": "Amazon Movies & TV"}
 
 
-def _style(ax) -> None:
+def style_axes(ax) -> None:
+    """Shared chart styling (also used by notebooks/data_analysis.ipynb)."""
     ax.set_facecolor(SURFACE)
     for s in ("top", "right", "left"):
         ax.spines[s].set_visible(False)
@@ -43,7 +42,7 @@ def history_lengths(out: Path) -> None:
     seq = Sequences.load(processed_dir())
     lens = np.diff(seq.offsets)
     fig, ax = plt.subplots(figsize=(7.2, 3.8), dpi=150, facecolor=SURFACE)
-    _style(ax)
+    style_axes(ax)
     for d, name in enumerate(DOMAINS):
         x = np.sort(lens[seq.domain == d])
         y = np.arange(1, len(x) + 1) / len(x)
@@ -76,7 +75,7 @@ def results(out: Path, metrics: Path, ablations: Path | None) -> None:
         if "content_only" in m[name]:
             rows.append(("Content only (cold-start mode)", m[name]["content_only"]["ndcg@10"], False))
         rows.append(("Popularity", m[name]["popularity"]["ndcg@10"], False))
-        _style(ax)
+        style_axes(ax)
         ax.grid(axis="y", visible=False)
         y = np.arange(len(rows))[::-1]
         vals = [r[1] for r in rows]
@@ -100,6 +99,7 @@ def main() -> None:
     p.add_argument("--metrics", type=Path, default=RESULTS_DIR / "metrics.json")
     p.add_argument("--ablations", type=Path, default=RESULTS_DIR / "ablations.json")
     args = p.parse_args()
+    matplotlib.use("Agg")  # headless CLI; importing this module must not change a notebook's backend
     if args.what == "history":
         history_lengths(RESULTS_DIR / "history_length.png")
     else:
