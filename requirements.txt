@@ -1,0 +1,10 @@
+# torch: use the CUDA build preinstalled on Colab (locally: the CPU wheel from download.pytorch.org)
+numpy>=1.26
+polars>=1.0
+pyarrow>=15
+pandas>=2.0
+transformers>=4.46
+huggingface_hub>=0.30
+safetensors>=0.4
+tqdm>=4.66
+matplotlib>=3.7

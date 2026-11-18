@@ -1,0 +1,14 @@
+# data, models and build artifacts never go into git
+data/
+outputs/
+runs/
+dist/
+*.tar.gz
+*.safetensors
+*.pt
+.hf_token
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/

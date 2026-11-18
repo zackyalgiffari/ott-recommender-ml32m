@@ -1,0 +1,243 @@
+{
+  "sources": {
+    "ml32m": {
+      "repo_id": "hazemessam/ml-32m",
+      "revision": "42dc8193d723e5de13316f4b663ee5024d87f573",
+      "files": [
+        "ratings.csv",
+        "movies.csv",
+        "links.csv",
+        "checksums.txt",
+        "README.txt"
+      ],
+      "md5": {
+        "ratings.csv": {
+          "md5": "cf12b74f9ad4b94a011f079e26d4270a",
+          "expected": "cf12b74f9ad4b94a011f079e26d4270a",
+          "ok": true
+        },
+        "movies.csv": {
+          "md5": "0df90835c19151f9d819d0822e190797",
+          "expected": "0df90835c19151f9d819d0822e190797",
+          "ok": true
+        },
+        "links.csv": {
+          "md5": "8f033867bcb4e6be8792b21468b4fa6e",
+          "expected": "8f033867bcb4e6be8792b21468b4fa6e",
+          "ok": true
+        }
+      }
+    },
+    "tmdb": {
+      "repo_id": "ada-datadruids/full_tmdb_movies_dataset",
+      "revision": "13ba9f3a87c60eaa07b235e1cfd2e16cc1c9105c",
+      "files": [
+        "TMDB_movie_dataset_v11.csv"
+      ]
+    },
+    "amazon": {
+      "repo_id": "McAuley-Lab/Amazon-Reviews-2023",
+      "revision": "2b6d039ed471f2ba5fd2acb718bf33b0a7e5598e",
+      "files": [
+        "benchmark/5core/rating_only/Movies_and_TV.csv",
+        "raw/meta_categories/meta_Movies_and_TV.jsonl"
+      ]
+    }
+  },
+  "movielens": {
+    "official_counts_ok": true,
+    "ratings": 32000204,
+    "movies": 87585,
+    "users": 200948,
+    "movies_with_ratings": 84432,
+    "rating_time_range_utc": [
+      "1995-01-09 11:46:44",
+      "2023-10-13 02:29:07"
+    ],
+    "tmdb_join": {
+      "rule": "accept when MovieLens imdbId == TMDB imdb_id; if TMDB has no imdb_id, require an identical normalised title and |year gap| <= 1",
+      "tmdb_dump_rows_unique_ids": 1141576,
+      "ml_movies_with_tmdbId": 87461,
+      "found_in_dump": 86493,
+      "imdb_match": 86319,
+      "imdb_mismatch_rejected": 148,
+      "imdb_missing": 26,
+      "imdb_missing_accepted_by_title_year": 18,
+      "accepted": 86337,
+      "accepted_share": 0.9858,
+      "accepted_year_gap_ge2": 774,
+      "accepted_with_overview": 85479,
+      "accepted_with_keywords": 60125
+    },
+    "genres": {
+      "Drama": 34175,
+      "Comedy": 23124,
+      "Thriller": 11823,
+      "Romance": 10369,
+      "Action": 9668,
+      "Documentary": 9363,
+      "Horror": 8654,
+      "(no genres listed)": 7080,
+      "Crime": 6976,
+      "Adventure": 5402,
+      "Sci-Fi": 4907,
+      "Animation": 4617,
+      "Children": 4520,
+      "Mystery": 4013,
+      "Fantasy": 3851,
+      "War": 2325,
+      "Western": 1696,
+      "Musical": 1059,
+      "Film-Noir": 353,
+      "IMAX": 195
+    },
+    "original_language_top15": {
+      "en": 54481,
+      "fr": 5104,
+      "it": 3287,
+      "ja": 2945,
+      "es": 2859,
+      "de": 2189,
+      "ru": 2138,
+      "hi": 1214,
+      "zh": 1053,
+      "ko": 1035,
+      "pt": 881,
+      "sv": 838,
+      "cn": 744,
+      "fi": 650,
+      "pl": 627
+    },
+    "distinct_original_languages": 121,
+    "release_decades": {
+      "1870s": 3,
+      "1880s": 13,
+      "1890s": 201,
+      "1900s": 299,
+      "1910s": 388,
+      "1920s": 730,
+      "1930s": 2592,
+      "1940s": 2762,
+      "1950s": 3620,
+      "1960s": 4363,
+      "1970s": 6005,
+      "1980s": 6386,
+      "1990s": 8242,
+      "2000s": 15538,
+      "2010s": 28251,
+      "2020s": 8061
+    }
+  },
+  "amazon": {
+    "events_raw": 7441129,
+    "duplicates_removed": 0,
+    "events": 7441129,
+    "users": 657203,
+    "items": 197943,
+    "meta_coverage": 1.0,
+    "items_with_title": 115101,
+    "items_with_description": 106290,
+    "format_counts": {
+      "Prime Video": 93515,
+      "Disc (format unknown)": 55925,
+      "DVD": 29102,
+      "Blu-ray": 19374,
+      "VHS": 27
+    },
+    "prime_video_items_without_title": 82840,
+    "top_genres": {
+      "Drama": 24767,
+      "Comedy": 18645,
+      "Action & Adventure": 15568,
+      "Kids & Family": 8852,
+      "Horror": 6816,
+      "Documentary": 6075,
+      "Science Fiction & Fantasy": 5388,
+      "Science Fiction": 4634,
+      "Animation": 4449,
+      "Television": 4097,
+      "Blu-ray Movie": 3913,
+      "DVD Movie": 3903,
+      "Anime & Manga": 3186,
+      "Suspense": 3132,
+      "Action": 3012
+    },
+    "release_decades": {
+      "1900s": 1,
+      "1910s": 1,
+      "1920s": 12,
+      "1930s": 86,
+      "1940s": 106,
+      "1950s": 140,
+      "1960s": 125,
+      "1970s": 144,
+      "1980s": 295,
+      "1990s": 5703,
+      "2000s": 37001,
+      "2010s": 46261,
+      "2020s": 4646
+    },
+    "time_range_utc": [
+      "1997-12-31 15:29:20",
+      "2023-09-07 23:09:16.149000"
+    ]
+  },
+  "split": {
+    "protocol": "per-user leave-last-out by timestamp (ties broken by item index); test = last event, validation = second-to-last, train = the rest",
+    "min_events_per_user": 3,
+    "per_domain": {
+      "movielens": {
+        "users": 200948,
+        "events": 32000204,
+        "train_events": 31598308,
+        "catalog_items": 87585,
+        "items_with_train_events": 84259,
+        "density": 0.0018181902499853498,
+        "history_len_percentiles": {
+          "p5": 22.0,
+          "p25": 36.0,
+          "p50": 73.0,
+          "p75": 167.0,
+          "p95": 571.0,
+          "p99": 1290.0
+        },
+        "history_len_max": 33332,
+        "cold_val_targets": 75,
+        "cold_test_targets": 102
+      },
+      "amazon": {
+        "users": 657203,
+        "events": 7441129,
+        "train_events": 6126723,
+        "catalog_items": 197943,
+        "items_with_train_events": 197747,
+        "density": 5.720041085695733e-05,
+        "history_len_percentiles": {
+          "p5": 5.0,
+          "p25": 6.0,
+          "p50": 7.0,
+          "p75": 11.0,
+          "p95": 29.0,
+          "p99": 68.0
+        },
+        "history_len_max": 3079,
+        "cold_val_targets": 285,
+        "cold_test_targets": 907
+      }
+    },
+    "sha256": "40262b28ecc7258d2b495f2680c8678e1bdf6c38a9a959340715a89682c9569c"
+  },
+  "catalog": {
+    "n_items": 285528,
+    "domain_ranges": {
+      "movielens": [
+        1,
+        87586
+      ],
+      "amazon": [
+        87586,
+        285529
+      ]
+    }
+  }
+}
