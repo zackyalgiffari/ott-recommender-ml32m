@@ -4,7 +4,8 @@
 #   remote_job.sh smoke                       sampled users, 1 short epoch, no upload
 #   remote_job.sh full [package args] [-- train args]
 #                                             full data, train, evaluate, package (+ private upload)
-#   remote_job.sh ablations                   ID-only, MovieLens-only and Amazon-only models
+#   remote_job.sh ablations [names...]        ID-only, MovieLens-only and Amazon-only models
+#                                             (or only the named ones)
 set -euo pipefail
 MODE="${1:-full}"
 shift || true
@@ -57,9 +58,16 @@ case "$MODE" in
       python -m src.train --output-dir "outputs/$name" --history-out "results/ablations/${name}_history.json" "$@"
       python -m src.evaluate --model "outputs/$name/best" --domains "$doms" --out "results/ablations/$name.json"
     }
-    run id_only movielens,amazon --no-content
-    run movielens_only movielens --domains movielens
-    run amazon_only amazon --domains amazon
+    WHICH=("$@")
+    (( ${#WHICH[@]} )) || WHICH=(id_only movielens_only amazon_only)
+    for a in "${WHICH[@]}"; do
+      case "$a" in
+        id_only) run id_only movielens,amazon --no-content ;;
+        movielens_only) run movielens_only movielens --domains movielens ;;
+        amazon_only) run amazon_only amazon --domains amazon ;;
+        *) echo "unknown ablation $a"; exit 2 ;;
+      esac
+    done
     python -m src.ablations
     ;;
   *)

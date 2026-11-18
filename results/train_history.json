@@ -2,7 +2,7 @@
   "args": {
     "sample_users": "None",
     "output_dir": "outputs",
-    "history_out": "/content/app/results/train_history.json",
+    "history_out": "results/train_history.json",
     "domains": "movielens,amazon",
     "d_model": "256",
     "layers": "2",

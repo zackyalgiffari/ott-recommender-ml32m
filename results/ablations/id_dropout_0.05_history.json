@@ -1,0 +1,903 @@
+{
+  "args": {
+    "sample_users": "None",
+    "output_dir": "outputs",
+    "history_out": "results/train_history.json",
+    "domains": "movielens,amazon",
+    "d_model": "256",
+    "layers": "2",
+    "heads": "4",
+    "dropout": "0.2",
+    "id_dropout": "0.05",
+    "no_content": "False",
+    "no_id": "False",
+    "max_len_ml": "200",
+    "max_len_az": "50",
+    "tokens_per_batch": "25600",
+    "negatives": "8192",
+    "lr": "0.001",
+    "weight_decay": "0.01",
+    "warmup_steps": "1000",
+    "epochs": "30",
+    "patience": "3",
+    "max_steps_per_epoch": "None",
+    "val_users": "20000",
+    "seed": "42",
+    "device": "cuda",
+    "resume": "False",
+    "log_every": "200"
+  },
+  "params": 74924544,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 5.74096,
+      "train_seconds": 85,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.06771,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.1769,
+          "ndcg@10": 0.09309,
+          "recall@20": 0.2634,
+          "ndcg@20": 0.11478,
+          "mrr@20": 0.07366,
+          "median_rank": 78.0,
+          "coverage@10": 0.05727
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.07685,
+          "ndcg@10": 0.04233,
+          "recall@20": 0.11025,
+          "ndcg@20": 0.05072,
+          "mrr@20": 0.03409,
+          "median_rank": 1352.0,
+          "coverage@10": 0.0423
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "loss": 5.05624,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.08557,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.21655,
+          "ndcg@10": 0.117,
+          "recall@20": 0.30925,
+          "ndcg@20": 0.14037,
+          "mrr@20": 0.0932,
+          "median_rank": 62.0,
+          "coverage@10": 0.06855
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.0948,
+          "ndcg@10": 0.05413,
+          "recall@20": 0.13055,
+          "ndcg@20": 0.0631,
+          "mrr@20": 0.04413,
+          "median_rank": 1154.0,
+          "coverage@10": 0.05525
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "loss": 4.91322,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.0925,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2313,
+          "ndcg@10": 0.1267,
+          "recall@20": 0.32545,
+          "ndcg@20": 0.15044,
+          "mrr@20": 0.10149,
+          "median_rank": 56.0,
+          "coverage@10": 0.06913
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.10015,
+          "ndcg@10": 0.0583,
+          "recall@20": 0.13765,
+          "ndcg@20": 0.06772,
+          "mrr@20": 0.04802,
+          "median_rank": 1035.0,
+          "coverage@10": 0.06619
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "loss": 4.83987,
+      "train_seconds": 83,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.09778,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.24085,
+          "ndcg@10": 0.13213,
+          "recall@20": 0.3395,
+          "ndcg@20": 0.15695,
+          "mrr@20": 0.10586,
+          "median_rank": 53.0,
+          "coverage@10": 0.07628
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.107,
+          "ndcg@10": 0.06343,
+          "recall@20": 0.1433,
+          "ndcg@20": 0.07258,
+          "mrr@20": 0.05257,
+          "median_rank": 998.0,
+          "coverage@10": 0.07454
+        }
+      }
+    },
+    {
+      "epoch": 5,
+      "loss": 4.79213,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.09926,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2407,
+          "ndcg@10": 0.13436,
+          "recall@20": 0.33845,
+          "ndcg@20": 0.15904,
+          "mrr@20": 0.10877,
+          "median_rank": 52.0,
+          "coverage@10": 0.07513
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1084,
+          "ndcg@10": 0.06416,
+          "recall@20": 0.143,
+          "ndcg@20": 0.07286,
+          "mrr@20": 0.05296,
+          "median_rank": 1038.0,
+          "coverage@10": 0.07604
+        }
+      }
+    },
+    {
+      "epoch": 6,
+      "loss": 4.75397,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10343,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25235,
+          "ndcg@10": 0.14101,
+          "recall@20": 0.3502,
+          "ndcg@20": 0.16563,
+          "mrr@20": 0.11382,
+          "median_rank": 51.0,
+          "coverage@10": 0.07858
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11205,
+          "ndcg@10": 0.06585,
+          "recall@20": 0.1485,
+          "ndcg@20": 0.07506,
+          "mrr@20": 0.05424,
+          "median_rank": 969.0,
+          "coverage@10": 0.0839
+        }
+      }
+    },
+    {
+      "epoch": 7,
+      "loss": 4.72378,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10486,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25295,
+          "ndcg@10": 0.14205,
+          "recall@20": 0.3514,
+          "ndcg@20": 0.16694,
+          "mrr@20": 0.1151,
+          "median_rank": 50.0,
+          "coverage@10": 0.07983
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1128,
+          "ndcg@10": 0.06767,
+          "recall@20": 0.1503,
+          "ndcg@20": 0.0771,
+          "mrr@20": 0.05633,
+          "median_rank": 947.0,
+          "coverage@10": 0.09162
+        }
+      }
+    },
+    {
+      "epoch": 8,
+      "loss": 4.6959,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10597,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25355,
+          "ndcg@10": 0.14253,
+          "recall@20": 0.35335,
+          "ndcg@20": 0.1677,
+          "mrr@20": 0.1155,
+          "median_rank": 49.0,
+          "coverage@10": 0.08493
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11605,
+          "ndcg@10": 0.0694,
+          "recall@20": 0.15295,
+          "ndcg@20": 0.0787,
+          "mrr@20": 0.05759,
+          "median_rank": 934.0,
+          "coverage@10": 0.09523
+        }
+      }
+    },
+    {
+      "epoch": 9,
+      "loss": 4.67339,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10567,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25375,
+          "ndcg@10": 0.14243,
+          "recall@20": 0.3517,
+          "ndcg@20": 0.16714,
+          "mrr@20": 0.11514,
+          "median_rank": 50.0,
+          "coverage@10": 0.08362
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11375,
+          "ndcg@10": 0.06891,
+          "recall@20": 0.15015,
+          "ndcg@20": 0.0781,
+          "mrr@20": 0.05769,
+          "median_rank": 986.0,
+          "coverage@10": 0.09438
+        }
+      }
+    },
+    {
+      "epoch": 10,
+      "loss": 4.65015,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10817,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2603,
+          "ndcg@10": 0.14676,
+          "recall@20": 0.35735,
+          "ndcg@20": 0.17126,
+          "mrr@20": 0.11888,
+          "median_rank": 48.0,
+          "coverage@10": 0.08448
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1154,
+          "ndcg@10": 0.06957,
+          "recall@20": 0.15305,
+          "ndcg@20": 0.07905,
+          "mrr@20": 0.05813,
+          "median_rank": 986.0,
+          "coverage@10": 0.09897
+        }
+      }
+    },
+    {
+      "epoch": 11,
+      "loss": 4.63144,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10794,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25965,
+          "ndcg@10": 0.14623,
+          "recall@20": 0.357,
+          "ndcg@20": 0.17078,
+          "mrr@20": 0.11837,
+          "median_rank": 48.0,
+          "coverage@10": 0.08543
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1148,
+          "ndcg@10": 0.06965,
+          "recall@20": 0.15205,
+          "ndcg@20": 0.07904,
+          "mrr@20": 0.05838,
+          "median_rank": 980.0,
+          "coverage@10": 0.09795
+        }
+      }
+    },
+    {
+      "epoch": 12,
+      "loss": 4.6118,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10825,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.25995,
+          "ndcg@10": 0.14637,
+          "recall@20": 0.36015,
+          "ndcg@20": 0.17165,
+          "mrr@20": 0.11865,
+          "median_rank": 48.0,
+          "coverage@10": 0.08669
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1158,
+          "ndcg@10": 0.07012,
+          "recall@20": 0.1515,
+          "ndcg@20": 0.07907,
+          "mrr@20": 0.05852,
+          "median_rank": 1030.0,
+          "coverage@10": 0.10697
+        }
+      }
+    },
+    {
+      "epoch": 13,
+      "loss": 4.59739,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.10903,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2613,
+          "ndcg@10": 0.14815,
+          "recall@20": 0.3623,
+          "ndcg@20": 0.1736,
+          "mrr@20": 0.12055,
+          "median_rank": 47.0,
+          "coverage@10": 0.085
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11465,
+          "ndcg@10": 0.06992,
+          "recall@20": 0.1487,
+          "ndcg@20": 0.07853,
+          "mrr@20": 0.05852,
+          "median_rank": 1043.0,
+          "coverage@10": 0.10208
+        }
+      }
+    },
+    {
+      "epoch": 14,
+      "loss": 4.58036,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11107,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2651,
+          "ndcg@10": 0.14991,
+          "recall@20": 0.36385,
+          "ndcg@20": 0.1748,
+          "mrr@20": 0.12165,
+          "median_rank": 46.0,
+          "coverage@10": 0.08709
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11855,
+          "ndcg@10": 0.07223,
+          "recall@20": 0.153,
+          "ndcg@20": 0.0809,
+          "mrr@20": 0.06035,
+          "median_rank": 1032.0,
+          "coverage@10": 0.10791
+        }
+      }
+    },
+    {
+      "epoch": 15,
+      "loss": 4.56663,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11079,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.26265,
+          "ndcg@10": 0.1493,
+          "recall@20": 0.36405,
+          "ndcg@20": 0.17489,
+          "mrr@20": 0.12174,
+          "median_rank": 47.0,
+          "coverage@10": 0.08975
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11795,
+          "ndcg@10": 0.07229,
+          "recall@20": 0.15305,
+          "ndcg@20": 0.08113,
+          "mrr@20": 0.0607,
+          "median_rank": 1021.0,
+          "coverage@10": 0.11386
+        }
+      }
+    },
+    {
+      "epoch": 16,
+      "loss": 4.55662,
+      "train_seconds": 83,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11122,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2642,
+          "ndcg@10": 0.14949,
+          "recall@20": 0.3633,
+          "ndcg@20": 0.17448,
+          "mrr@20": 0.12136,
+          "median_rank": 46.0,
+          "coverage@10": 0.08917
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11725,
+          "ndcg@10": 0.07295,
+          "recall@20": 0.15345,
+          "ndcg@20": 0.08206,
+          "mrr@20": 0.06178,
+          "median_rank": 1030.0,
+          "coverage@10": 0.11129
+        }
+      }
+    },
+    {
+      "epoch": 17,
+      "loss": 4.54138,
+      "train_seconds": 84,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11049,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.26715,
+          "ndcg@10": 0.15155,
+          "recall@20": 0.36795,
+          "ndcg@20": 0.17704,
+          "mrr@20": 0.12327,
+          "median_rank": 46.0,
+          "coverage@10": 0.09027
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11365,
+          "ndcg@10": 0.06943,
+          "recall@20": 0.1481,
+          "ndcg@20": 0.07811,
+          "mrr@20": 0.05818,
+          "median_rank": 1162.0,
+          "coverage@10": 0.11209
+        }
+      }
+    },
+    {
+      "epoch": 18,
+      "loss": 4.53003,
+      "train_seconds": 84,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11353,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2705,
+          "ndcg@10": 0.15438,
+          "recall@20": 0.36645,
+          "ndcg@20": 0.17859,
+          "mrr@20": 0.12559,
+          "median_rank": 45.0,
+          "coverage@10": 0.0899
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11755,
+          "ndcg@10": 0.07268,
+          "recall@20": 0.1529,
+          "ndcg@20": 0.0816,
+          "mrr@20": 0.06134,
+          "median_rank": 1073.0,
+          "coverage@10": 0.11355
+        }
+      }
+    },
+    {
+      "epoch": 19,
+      "loss": 4.51931,
+      "train_seconds": 83,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.112,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.26695,
+          "ndcg@10": 0.15151,
+          "recall@20": 0.36415,
+          "ndcg@20": 0.17609,
+          "mrr@20": 0.12302,
+          "median_rank": 46.0,
+          "coverage@10": 0.09155
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11715,
+          "ndcg@10": 0.0725,
+          "recall@20": 0.15285,
+          "ndcg@20": 0.08152,
+          "mrr@20": 0.06128,
+          "median_rank": 1097.0,
+          "coverage@10": 0.11852
+        }
+      }
+    },
+    {
+      "epoch": 20,
+      "loss": 4.50663,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11344,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2723,
+          "ndcg@10": 0.15404,
+          "recall@20": 0.3705,
+          "ndcg@20": 0.17881,
+          "mrr@20": 0.12471,
+          "median_rank": 45.0,
+          "coverage@10": 0.09034
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1179,
+          "ndcg@10": 0.07283,
+          "recall@20": 0.1522,
+          "ndcg@20": 0.08148,
+          "mrr@20": 0.06132,
+          "median_rank": 1093.0,
+          "coverage@10": 0.11986
+        }
+      }
+    },
+    {
+      "epoch": 21,
+      "loss": 4.49733,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11428,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.26945,
+          "ndcg@10": 0.15417,
+          "recall@20": 0.3676,
+          "ndcg@20": 0.17893,
+          "mrr@20": 0.12574,
+          "median_rank": 46.0,
+          "coverage@10": 0.09216
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11915,
+          "ndcg@10": 0.07439,
+          "recall@20": 0.15445,
+          "ndcg@20": 0.08328,
+          "mrr@20": 0.06301,
+          "median_rank": 1073.0,
+          "coverage@10": 0.11844
+        }
+      }
+    },
+    {
+      "epoch": 22,
+      "loss": 4.48995,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11434,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27175,
+          "ndcg@10": 0.1549,
+          "recall@20": 0.3705,
+          "ndcg@20": 0.17981,
+          "mrr@20": 0.12604,
+          "median_rank": 45.0,
+          "coverage@10": 0.09148
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11885,
+          "ndcg@10": 0.07377,
+          "recall@20": 0.1514,
+          "ndcg@20": 0.08201,
+          "mrr@20": 0.06216,
+          "median_rank": 1107.0,
+          "coverage@10": 0.12289
+        }
+      }
+    },
+    {
+      "epoch": 23,
+      "loss": 4.48203,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11486,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27275,
+          "ndcg@10": 0.15587,
+          "recall@20": 0.36885,
+          "ndcg@20": 0.18015,
+          "mrr@20": 0.12686,
+          "median_rank": 45.0,
+          "coverage@10": 0.09361
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.119,
+          "ndcg@10": 0.07385,
+          "recall@20": 0.1533,
+          "ndcg@20": 0.08246,
+          "mrr@20": 0.06225,
+          "median_rank": 1116.0,
+          "coverage@10": 0.12443
+        }
+      }
+    },
+    {
+      "epoch": 24,
+      "loss": 4.47436,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11486,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27185,
+          "ndcg@10": 0.15588,
+          "recall@20": 0.3721,
+          "ndcg@20": 0.18111,
+          "mrr@20": 0.1273,
+          "median_rank": 44.0,
+          "coverage@10": 0.09171
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11855,
+          "ndcg@10": 0.07384,
+          "recall@20": 0.153,
+          "ndcg@20": 0.0825,
+          "mrr@20": 0.0624,
+          "median_rank": 1124.0,
+          "coverage@10": 0.1247
+        }
+      }
+    },
+    {
+      "epoch": 25,
+      "loss": 4.46675,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11447,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27225,
+          "ndcg@10": 0.15568,
+          "recall@20": 0.3724,
+          "ndcg@20": 0.18092,
+          "mrr@20": 0.12696,
+          "median_rank": 45.0,
+          "coverage@10": 0.09366
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11795,
+          "ndcg@10": 0.07326,
+          "recall@20": 0.1507,
+          "ndcg@20": 0.08153,
+          "mrr@20": 0.06179,
+          "median_rank": 1146.0,
+          "coverage@10": 0.12107
+        }
+      }
+    },
+    {
+      "epoch": 26,
+      "loss": 4.46202,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11504,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27435,
+          "ndcg@10": 0.15645,
+          "recall@20": 0.37295,
+          "ndcg@20": 0.18136,
+          "mrr@20": 0.1273,
+          "median_rank": 45.0,
+          "coverage@10": 0.09393
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11735,
+          "ndcg@10": 0.07363,
+          "recall@20": 0.15165,
+          "ndcg@20": 0.08229,
+          "mrr@20": 0.06248,
+          "median_rank": 1157.0,
+          "coverage@10": 0.12896
+        }
+      }
+    },
+    {
+      "epoch": 27,
+      "loss": 4.45839,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11558,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.273,
+          "ndcg@10": 0.15631,
+          "recall@20": 0.3736,
+          "ndcg@20": 0.18168,
+          "mrr@20": 0.12764,
+          "median_rank": 44.0,
+          "coverage@10": 0.09478
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11885,
+          "ndcg@10": 0.07485,
+          "recall@20": 0.15245,
+          "ndcg@20": 0.0833,
+          "mrr@20": 0.0636,
+          "median_rank": 1150.0,
+          "coverage@10": 0.12769
+        }
+      }
+    },
+    {
+      "epoch": 28,
+      "loss": 4.45549,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11575,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27455,
+          "ndcg@10": 0.15781,
+          "recall@20": 0.37185,
+          "ndcg@20": 0.18239,
+          "mrr@20": 0.1289,
+          "median_rank": 44.0,
+          "coverage@10": 0.0937
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.117,
+          "ndcg@10": 0.0737,
+          "recall@20": 0.15105,
+          "ndcg@20": 0.08228,
+          "mrr@20": 0.0627,
+          "median_rank": 1174.0,
+          "coverage@10": 0.12988
+        }
+      }
+    },
+    {
+      "epoch": 29,
+      "loss": 4.45315,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11568,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.2725,
+          "ndcg@10": 0.15685,
+          "recall@20": 0.37205,
+          "ndcg@20": 0.18204,
+          "mrr@20": 0.12843,
+          "median_rank": 44.0,
+          "coverage@10": 0.09498
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.1181,
+          "ndcg@10": 0.0745,
+          "recall@20": 0.15115,
+          "ndcg@20": 0.08281,
+          "mrr@20": 0.06333,
+          "median_rank": 1153.0,
+          "coverage@10": 0.12757
+        }
+      }
+    },
+    {
+      "epoch": 30,
+      "loss": 4.45033,
+      "train_seconds": 82,
+      "val_seconds": 1,
+      "val_mean_ndcg@10": 0.11591,
+      "val": {
+        "movielens": {
+          "users": 20000,
+          "recall@10": 0.27565,
+          "ndcg@10": 0.15735,
+          "recall@20": 0.3713,
+          "ndcg@20": 0.18142,
+          "mrr@20": 0.12782,
+          "median_rank": 44.0,
+          "coverage@10": 0.09503
+        },
+        "amazon": {
+          "users": 20000,
+          "recall@10": 0.11925,
+          "ndcg@10": 0.07447,
+          "recall@20": 0.152,
+          "ndcg@20": 0.08269,
+          "mrr@20": 0.06291,
+          "median_rank": 1152.0,
+          "coverage@10": 0.1268
+        }
+      }
+    }
+  ]
+}

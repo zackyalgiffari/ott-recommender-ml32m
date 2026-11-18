@@ -23,7 +23,7 @@ import torch
 import torch.nn.functional as F
 from safetensors.torch import load_file
 
-from src.config import DOMAINS, ENCODER, RESULTS_DIR, processed_dir
+from src.config import DOMAINS, ENCODER, RESULTS_DIR, ROOT, processed_dir
 from src.data import Sequences, train_batch, train_windows
 from src.evaluate import autocast, rank_domain
 from src.model import HybridSASRec
@@ -73,6 +73,16 @@ def sampled_softmax_loss(model, inp, tgt, domain: int, lo: int, hi: int, n_neg: 
     neg_logit = (h @ v_neg.T).masked_fill(neg[None, :] == t[:, None], float("-inf"))
     logits = torch.cat([pos_logit, neg_logit], dim=1).float()
     return F.cross_entropy(logits, torch.zeros(len(t), dtype=torch.long, device=inp.device))
+
+
+def _rel(v) -> str:
+    """Paths relative to the repo root, so logs do not record machine-specific locations."""
+    if isinstance(v, Path):
+        try:
+            return str(v.resolve().relative_to(ROOT))
+        except ValueError:
+            return str(v)
+    return str(v)
 
 
 def param_groups(model: torch.nn.Module, weight_decay: float):
@@ -217,7 +227,7 @@ def main() -> None:
         torch.save({"model": model.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
                     "history": history, "best": best, "bad": bad, "epoch": epoch + 1, "step": step, "rng": rng}, ckpt)
         args.history_out.parent.mkdir(parents=True, exist_ok=True)
-        args.history_out.write_text(json.dumps({"args": {k: str(v) for k, v in vars(args).items()},
+        args.history_out.write_text(json.dumps({"args": {k: _rel(v) for k, v in vars(args).items()},
                                                 "params": n_params, "history": history}, indent=2))
         if bad >= args.patience:
             print(f"[train] early stop: no improvement for {args.patience} epochs", flush=True)

@@ -62,7 +62,8 @@ def build(model_dir: Path, processed: Path, out: Path, reset_cold_ids: bool = Fa
     if card.exists():
         shutil.copy2(card, out / "README.md")
     (out / "requirements.txt").write_text(HUB_REQUIREMENTS)
-    for f in ("metrics.json", "data_report.json", "train_history.json", "ablations.json"):
+    for f in ("metrics.json", "data_report.json", "train_history.json", "ablations.json",
+              "results_ndcg.png", "history_length.png"):
         if (RESULTS_DIR / f).exists():
             shutil.copy2(RESULTS_DIR / f, out / "results" / f)
     return out

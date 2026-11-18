@@ -58,6 +58,8 @@ def render(run_note: str) -> str:
         key = f"{dom}_only"
         if key in abl and dom in abl[key]:
             out.append(row(f"Ablation: hybrid trained on {LABEL[dom]} only", abl[key][dom]))
+        if "id_dropout_0.05" in abl and dom in abl["id_dropout_0.05"]:
+            out.append(row("Variant: hybrid with ID-dropout 0.05", abl["id_dropout_0.05"][dom]))
         out.append(row("Popularity baseline", r["popularity"]))
         out.append("")
     # cold-start slice

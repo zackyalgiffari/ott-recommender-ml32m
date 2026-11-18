@@ -24,21 +24,21 @@
     "movielens": {
       "hybrid": {
         "users": 200948,
-        "recall@10": 0.23971,
-        "ndcg@10": 0.13886,
-        "recall@20": 0.33025,
-        "ndcg@20": 0.16168,
-        "mrr@20": 0.11435,
+        "recall@10": 0.2398,
+        "ndcg@10": 0.1389,
+        "recall@20": 0.33039,
+        "ndcg@20": 0.16172,
+        "mrr@20": 0.11438,
         "median_rank": 58.0,
-        "coverage@10": 0.14437,
+        "coverage@10": 0.14477,
         "cold_targets": {
           "users": 102,
-          "recall@10": 0.0,
-          "ndcg@10": 0.0,
-          "recall@20": 0.0,
-          "ndcg@20": 0.0,
-          "mrr@20": 0.0,
-          "median_rank": 41616.0
+          "recall@10": 0.01961,
+          "ndcg@10": 0.00912,
+          "recall@20": 0.01961,
+          "ndcg@20": 0.00912,
+          "mrr@20": 0.00572,
+          "median_rank": 5055.0
         }
       },
       "content_only": {
@@ -83,21 +83,21 @@
     "amazon": {
       "hybrid": {
         "users": 657203,
-        "recall@10": 0.09764,
+        "recall@10": 0.09763,
         "ndcg@10": 0.05948,
-        "recall@20": 0.12993,
-        "ndcg@20": 0.06762,
-        "mrr@20": 0.05,
-        "median_rank": 1608.0,
-        "coverage@10": 0.2335,
+        "recall@20": 0.12988,
+        "ndcg@20": 0.0676,
+        "mrr@20": 0.04999,
+        "median_rank": 1607.0,
+        "coverage@10": 0.23385,
         "cold_targets": {
           "users": 907,
-          "recall@10": 0.0,
-          "ndcg@10": 0.0,
-          "recall@20": 0.0,
-          "ndcg@20": 0.0,
-          "mrr@20": 0.0,
-          "median_rank": 45686.0
+          "recall@10": 0.00992,
+          "ndcg@10": 0.0039,
+          "recall@20": 0.01985,
+          "ndcg@20": 0.00635,
+          "mrr@20": 0.00277,
+          "median_rank": 8407.0
         }
       },
       "content_only": {
@@ -139,5 +139,12 @@
         }
       }
     }
+  },
+  "reset_cold_ids": true,
+  "provenance": {
+    "hybrid": "published weights (ID vectors of titles with no training events zeroed); full test set, evaluated in fp32 on CPU",
+    "content_only": "same model with every ID vector off; evaluated in bf16 on the training GPU",
+    "popularity": "training-set popularity; evaluated on the training GPU",
+    "note": "Main model trained on a Colab L4. The cold-ID reset was adopted from validation evidence (warm NDCG@10 unchanged, cold Amazon Recall@20 0% -> 3.9%)."
   }
 }

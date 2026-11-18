@@ -1,0 +1,168 @@
+{
+  "_description": {
+    "id_only": "SASRec with learned ID vectors only (no content tower), trained on both domains",
+    "movielens_only": "hybrid model trained on MovieLens only",
+    "amazon_only": "hybrid model trained on Amazon only",
+    "id_dropout_0.05": "hybrid trained on both domains with ID-dropout 0.05 instead of 0.2 (higher known-title accuracy, much weaker content-only / cold-start ranking)"
+  },
+  "id_only": {
+    "movielens": {
+      "users": 200948,
+      "recall@10": 0.24593,
+      "ndcg@10": 0.1425,
+      "recall@20": 0.33759,
+      "ndcg@20": 0.1656,
+      "mrr@20": 0.11729,
+      "median_rank": 56.0,
+      "coverage@10": 0.13322,
+      "cold_targets": {
+        "users": 102,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 82972.0
+      }
+    },
+    "amazon": {
+      "users": 657203,
+      "recall@10": 0.09125,
+      "ndcg@10": 0.05643,
+      "recall@20": 0.12097,
+      "ndcg@20": 0.06392,
+      "mrr@20": 0.04778,
+      "median_rank": 2094.0,
+      "coverage@10": 0.20501,
+      "cold_targets": {
+        "users": 907,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 160018.0
+      }
+    }
+  },
+  "movielens_only": {
+    "movielens": {
+      "users": 200948,
+      "recall@10": 0.25377,
+      "ndcg@10": 0.14811,
+      "recall@20": 0.34616,
+      "ndcg@20": 0.17142,
+      "mrr@20": 0.12227,
+      "median_rank": 53.0,
+      "coverage@10": 0.15141,
+      "cold_targets": {
+        "users": 102,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 60268.0
+      }
+    }
+  },
+  "amazon_only": {
+    "amazon": {
+      "users": 657203,
+      "recall@10": 0.09529,
+      "ndcg@10": 0.05811,
+      "recall@20": 0.12738,
+      "ndcg@20": 0.0662,
+      "mrr@20": 0.04893,
+      "median_rank": 1560.0,
+      "coverage@10": 0.34291,
+      "cold_targets": {
+        "users": 907,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 104103.0
+      }
+    }
+  },
+  "id_dropout_0.05": {
+    "movielens": {
+      "users": 200948,
+      "recall@10": 0.24259,
+      "ndcg@10": 0.14009,
+      "recall@20": 0.33391,
+      "ndcg@20": 0.16312,
+      "mrr@20": 0.11517,
+      "median_rank": 57.0,
+      "coverage@10": 0.1479,
+      "cold_targets": {
+        "users": 102,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 53884.0
+      },
+      "content_only": {
+        "users": 200948,
+        "recall@10": 0.03259,
+        "ndcg@10": 0.01724,
+        "recall@20": 0.05173,
+        "ndcg@20": 0.02204,
+        "mrr@20": 0.01391,
+        "median_rank": 1894.0,
+        "coverage@10": 0.03133,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 34478.0
+        }
+      }
+    },
+    "amazon": {
+      "users": 657203,
+      "recall@10": 0.09543,
+      "ndcg@10": 0.05917,
+      "recall@20": 0.12565,
+      "ndcg@20": 0.06678,
+      "mrr@20": 0.05011,
+      "median_rank": 1883.0,
+      "coverage@10": 0.26794,
+      "cold_targets": {
+        "users": 907,
+        "recall@10": 0.0,
+        "ndcg@10": 0.0,
+        "recall@20": 0.0,
+        "ndcg@20": 0.0,
+        "mrr@20": 0.0,
+        "median_rank": 52102.0
+      },
+      "content_only": {
+        "users": 657203,
+        "recall@10": 0.01879,
+        "ndcg@10": 0.01009,
+        "recall@20": 0.02696,
+        "ndcg@20": 0.01216,
+        "mrr@20": 0.00802,
+        "median_rank": 20410.0,
+        "coverage@10": 0.72182,
+        "cold_targets": {
+          "users": 907,
+          "recall@10": 0.00662,
+          "ndcg@10": 0.00404,
+          "recall@20": 0.01103,
+          "ndcg@20": 0.00517,
+          "mrr@20": 0.0036,
+          "median_rank": 21818.0
+        }
+      }
+    }
+  }
+}

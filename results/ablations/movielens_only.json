@@ -1,0 +1,87 @@
+{
+  "protocol": "full-catalog ranking per domain, leave-last-out, already-watched titles excluded; ties broken by item index",
+  "split": "test",
+  "split_sha256": "40262b28ecc7258d2b495f2680c8678e1bdf6c38a9a959340715a89682c9569c",
+  "model_config": {
+    "content_dim": 768,
+    "d_model": 256,
+    "n_layers": 2,
+    "n_heads": 4,
+    "max_len": 200,
+    "n_domains": 2,
+    "dropout": 0.2,
+    "id_dropout": 0.2,
+    "use_id": true,
+    "use_content": true,
+    "domains": [
+      "movielens",
+      "amazon"
+    ],
+    "encoder": "BAAI/bge-base-en-v1.5",
+    "n_items": 285528
+  },
+  "reset_cold_ids": false,
+  "users_per_domain": null,
+  "cold_only": false,
+  "results": {
+    "movielens": {
+      "hybrid": {
+        "users": 200948,
+        "recall@10": 0.25377,
+        "ndcg@10": 0.14811,
+        "recall@20": 0.34616,
+        "ndcg@20": 0.17142,
+        "mrr@20": 0.12227,
+        "median_rank": 53.0,
+        "coverage@10": 0.15141,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 60268.0
+        }
+      },
+      "content_only": {
+        "users": 200948,
+        "recall@10": 0.11908,
+        "ndcg@10": 0.06936,
+        "recall@20": 0.16269,
+        "ndcg@20": 0.08035,
+        "mrr@20": 0.05719,
+        "median_rank": 494.0,
+        "coverage@10": 0.10133,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0098,
+          "ndcg@20": 0.00251,
+          "mrr@20": 0.0007,
+          "median_rank": 15789.0
+        }
+      },
+      "popularity": {
+        "users": 200948,
+        "recall@10": 0.04275,
+        "ndcg@10": 0.02135,
+        "recall@20": 0.06979,
+        "ndcg@20": 0.0281,
+        "mrr@20": 0.01672,
+        "median_rank": 603.0,
+        "coverage@10": 0.00507,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 86618.0
+        }
+      }
+    }
+  }
+}
