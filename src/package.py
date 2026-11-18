@@ -22,12 +22,25 @@ from src.data import Sequences
 HUB_REQUIREMENTS = "torch>=2.1\nhuggingface_hub>=0.30\nsafetensors>=0.4\npandas>=2.0\npyarrow>=15\ntransformers>=4.46\n"
 
 
-def build(model_dir: Path, processed: Path, out: Path) -> Path:
+def build(model_dir: Path, processed: Path, out: Path, reset_cold_ids: bool = False) -> Path:
     if out.exists():
         shutil.rmtree(out)
     (out / "results").mkdir(parents=True)
-    for f in ("config.json", "model.safetensors"):
-        shutil.copy2(model_dir / f, out / f)
+    if reset_cold_ids:
+        import numpy as np
+        import torch
+
+        from src.model import HybridSASRec
+
+        model = HybridSASRec.from_pretrained(str(model_dir))
+        counts = Sequences.load(processed).train_counts()
+        n = model.reset_cold_ids(torch.from_numpy(np.flatnonzero(counts == 0)))
+        model.save_pretrained(out)
+        (out / "README.md").unlink(missing_ok=True)  # mixin's stub card; MODEL_CARD.md is copied below
+        print(f"[package] zeroed the ID vectors of {n:,} titles with no training events", flush=True)
+    else:
+        for f in ("config.json", "model.safetensors"):
+            shutil.copy2(model_dir / f, out / f)
     content = processed / "item_content.safetensors"
     if content.exists():
         shutil.copy2(content, out / "item_content.safetensors")
@@ -80,10 +93,12 @@ def main() -> None:
     p.add_argument("--out", type=Path, default=Path("outputs/hub"))
     p.add_argument("--push-to-hub", metavar="REPO_ID")
     p.add_argument("--revision", default=None, help="push to this branch instead of main")
+    p.add_argument("--reset-cold-ids", action="store_true",
+                   help="zero the ID vectors of titles with no training events (content-only scoring)")
     p.add_argument("--message", default="Upload OTT hybrid recommender")
     args = p.parse_args()
 
-    out = build(args.model_dir, processed_dir(args.sample_users), args.out)
+    out = build(args.model_dir, processed_dir(args.sample_users), args.out, args.reset_cold_ids)
     size = sum(f.stat().st_size for f in out.rglob("*") if f.is_file()) / 1e6
     print(f"[package] {out} ({size:.0f} MB): " + ", ".join(sorted(f.name for f in out.iterdir())), flush=True)
     if args.push_to_hub:

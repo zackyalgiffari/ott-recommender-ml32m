@@ -81,13 +81,19 @@ def load_model(model_dir: Path, processed: Path, device: torch.device) -> Hybrid
 
 
 def evaluate_all(model, seq, device, max_len: dict, split: str = "test", domains=None,
-                 content_only: bool = True, popularity: bool = True) -> dict:
+                 content_only: bool = True, popularity: bool = True,
+                 users_per_domain: int | None = None, cold_only: bool = False) -> dict:
     counts = seq.train_counts()
     out = {}
     for d, name in enumerate(DOMAINS):
         if domains is not None and name not in domains:
             continue
         users = seq.users(d)
+        if cold_only:  # only users whose held-out title never occurs in training
+            _, tgt, _, _ = eval_inputs(seq, users, split, 1)
+            users = users[counts[tgt] == 0]
+        elif users_per_domain and users_per_domain < len(users):
+            users = np.sort(np.random.default_rng(42).choice(users, users_per_domain, replace=False))
         _, tgt, _, _ = eval_inputs(seq, users, split, 1)
         cold = torch.from_numpy(counts[tgt] == 0)
         res = {}
@@ -118,12 +124,20 @@ def main() -> None:
     p.add_argument("--domains", default=",".join(DOMAINS))
     p.add_argument("--out", type=Path, default=RESULTS_DIR / "metrics.json")
     p.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    p.add_argument("--reset-cold-ids", action="store_true",
+                   help="zero the ID vectors of titles with no training events before evaluating")
+    p.add_argument("--no-baselines", action="store_true", help="skip content-only and popularity")
+    p.add_argument("--users-per-domain", type=int, default=None, help="evaluate a fixed random sample")
+    p.add_argument("--cold-only", action="store_true", help="only users whose target is a cold title")
     args = p.parse_args()
 
     device = torch.device(args.device)
     processed = processed_dir(args.sample_users)
     seq = Sequences.load(processed)
     model = load_model(args.model, processed, device)
+    if args.reset_cold_ids:
+        n = model.reset_cold_ids(torch.from_numpy(np.flatnonzero(seq.train_counts() == 0)))
+        print(f"[eval] zeroed the ID vectors of {n:,} titles with no training events", flush=True)
     max_len = {"movielens": min(DEFAULT_MAX_LEN["movielens"], model.max_len),
                "amazon": min(DEFAULT_MAX_LEN["amazon"], model.max_len)}
     metrics = {
@@ -133,7 +147,12 @@ def main() -> None:
         "split_sha256": seq.meta["split_sha256"],
         "model_config": {k: v for k, v in model._hub_mixin_config.items() if k != "domain_ranges"}
         if hasattr(model, "_hub_mixin_config") else {},
-        "results": evaluate_all(model, seq, device, max_len, args.split, domains=args.domains.split(",")),
+        "reset_cold_ids": args.reset_cold_ids,
+        "users_per_domain": args.users_per_domain,
+        "cold_only": args.cold_only,
+        "results": evaluate_all(model, seq, device, max_len, args.split, domains=args.domains.split(","),
+                                content_only=not args.no_baselines, popularity=not args.no_baselines,
+                                users_per_domain=args.users_per_domain, cold_only=args.cold_only),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(metrics, indent=2))

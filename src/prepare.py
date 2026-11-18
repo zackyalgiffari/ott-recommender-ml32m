@@ -260,8 +260,8 @@ def az_item(d: dict) -> dict:
     if title:
         display = title
     elif directors or cast:
-        who = f"dir. {directors[0]}" if directors else f"with {cast[0]}"
-        display = f"Untitled {fmt} item ({who})"
+        who = ([f"dir. {directors[0]}"] if directors else []) + ([f"with {', '.join(cast[:2])}"] if cast else [])
+        display = f"Untitled {fmt} item ({'; '.join(who)})"
     else:
         display = f"Untitled {fmt} item {d['parent_asin']}"
     parts = [f"{title}." if title else f"{fmt} title."]

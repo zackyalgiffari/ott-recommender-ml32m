@@ -1,0 +1,143 @@
+{
+  "protocol": "full-catalog ranking per domain, leave-last-out, already-watched titles excluded; ties broken by item index",
+  "split": "test",
+  "split_sha256": "40262b28ecc7258d2b495f2680c8678e1bdf6c38a9a959340715a89682c9569c",
+  "model_config": {
+    "content_dim": 768,
+    "d_model": 256,
+    "n_layers": 2,
+    "n_heads": 4,
+    "max_len": 200,
+    "n_domains": 2,
+    "dropout": 0.2,
+    "id_dropout": 0.2,
+    "use_id": true,
+    "use_content": true,
+    "domains": [
+      "movielens",
+      "amazon"
+    ],
+    "encoder": "BAAI/bge-base-en-v1.5",
+    "n_items": 285528
+  },
+  "results": {
+    "movielens": {
+      "hybrid": {
+        "users": 200948,
+        "recall@10": 0.23971,
+        "ndcg@10": 0.13886,
+        "recall@20": 0.33025,
+        "ndcg@20": 0.16168,
+        "mrr@20": 0.11435,
+        "median_rank": 58.0,
+        "coverage@10": 0.14437,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 41616.0
+        }
+      },
+      "content_only": {
+        "users": 200948,
+        "recall@10": 0.08144,
+        "ndcg@10": 0.04608,
+        "recall@20": 0.11413,
+        "ndcg@20": 0.0543,
+        "mrr@20": 0.03756,
+        "median_rank": 763.0,
+        "coverage@10": 0.09107,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0098,
+          "ndcg@20": 0.0024,
+          "mrr@20": 0.00061,
+          "median_rank": 14082.0
+        }
+      },
+      "popularity": {
+        "users": 200948,
+        "recall@10": 0.04275,
+        "ndcg@10": 0.02135,
+        "recall@20": 0.06979,
+        "ndcg@20": 0.0281,
+        "mrr@20": 0.01672,
+        "median_rank": 603.0,
+        "coverage@10": 0.00507,
+        "cold_targets": {
+          "users": 102,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 86618.0
+        }
+      }
+    },
+    "amazon": {
+      "hybrid": {
+        "users": 657203,
+        "recall@10": 0.09764,
+        "ndcg@10": 0.05948,
+        "recall@20": 0.12993,
+        "ndcg@20": 0.06762,
+        "mrr@20": 0.05,
+        "median_rank": 1608.0,
+        "coverage@10": 0.2335,
+        "cold_targets": {
+          "users": 907,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 45686.0
+        }
+      },
+      "content_only": {
+        "users": 657203,
+        "recall@10": 0.02346,
+        "ndcg@10": 0.01262,
+        "recall@20": 0.03371,
+        "ndcg@20": 0.0152,
+        "mrr@20": 0.01003,
+        "median_rank": 14430.0,
+        "coverage@10": 0.65458,
+        "cold_targets": {
+          "users": 907,
+          "recall@10": 0.01103,
+          "ndcg@10": 0.00633,
+          "recall@20": 0.01654,
+          "ndcg@20": 0.00778,
+          "mrr@20": 0.00537,
+          "median_rank": 20148.0
+        }
+      },
+      "popularity": {
+        "users": 657203,
+        "recall@10": 0.01729,
+        "ndcg@10": 0.00834,
+        "recall@20": 0.02477,
+        "ndcg@20": 0.0102,
+        "mrr@20": 0.00608,
+        "median_rank": 12603.0,
+        "coverage@10": 0.0001,
+        "cold_targets": {
+          "users": 907,
+          "recall@10": 0.0,
+          "ndcg@10": 0.0,
+          "recall@20": 0.0,
+          "ndcg@20": 0.0,
+          "mrr@20": 0.0,
+          "median_rank": 197840.0
+        }
+      }
+    }
+  }
+}

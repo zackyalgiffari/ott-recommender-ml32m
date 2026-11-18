@@ -35,27 +35,41 @@ if [[ -f "$HF_TOKEN_FILE" ]]; then
   colab upload -s "$SESSION" "$HF_TOKEN_FILE" /content/.hf_token
 fi
 
-# `colab exec` can hang after the remote cell finishes when its websocket drops
-# silently, so every call is bounded by `timeout`. A launch that "fails" this way
-# may still have started the job: the poll loop below is what decides.
-timeout "$LAUNCH_TIMEOUT" colab exec -s "$SESSION" --env "JOB_ARGS=$JOB_ARGS_JSON" <<'PY' \
-  || echo "[local] launch call did not return cleanly; polling to confirm the job started"
+# `colab exec` can hang after the remote cell finishes, or lose its websocket before the
+# cell runs at all, so every call is bounded by `timeout` and the launch is retried until
+# /content/run.log exists. The cell refuses to start a second job if one already started.
+LAUNCH_PY="$(cat <<'PY'
 import json, os, subprocess
-env = dict(os.environ, HF_TOKEN_PATH="/content/.hf_token", PYTHONUNBUFFERED="1",
-           TOKENIZERS_PARALLELISM="false", HF_HUB_DISABLE_PROGRESS_BARS="1",
-           OTT_DATA_DIR="/content/data")
-if os.path.exists("/content/.hf_token"):
-    os.chmod("/content/.hf_token", 0o600)
-subprocess.run(["bash", "-c", "rm -rf /content/app && mkdir -p /content/app && "
-                "tar -xzf /content/src.tar.gz -C /content/app"], check=True)
-args = json.loads(os.environ["JOB_ARGS"])
-with open("/content/run.log", "w") as log:
-    subprocess.Popen(
-        ["bash", "-c", 'bash scripts/remote_job.sh "$@"; echo $? > /content/run.exit', "job", *args],
-        cwd="/content/app", env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
-    )
-print("LAUNCHED", args)
+def launch():
+    if os.path.exists("/content/run.log"):
+        print("ALREADY LAUNCHED")
+        return
+    env = dict(os.environ, HF_TOKEN_PATH="/content/.hf_token", PYTHONUNBUFFERED="1",
+               TOKENIZERS_PARALLELISM="false", HF_HUB_DISABLE_PROGRESS_BARS="1",
+               OTT_DATA_DIR="/content/data")
+    if os.path.exists("/content/.hf_token"):
+        os.chmod("/content/.hf_token", 0o600)
+    subprocess.run(["bash", "-c", "rm -rf /content/app && mkdir -p /content/app && "
+                    "tar -xzf /content/src.tar.gz -C /content/app"], check=True)
+    args = json.loads(os.environ["JOB_ARGS"])
+    with open("/content/run.log", "w") as log:
+        subprocess.Popen(
+            ["bash", "-c", 'bash scripts/remote_job.sh "$@"; echo $? > /content/run.exit', "job", *args],
+            cwd="/content/app", env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
+        )
+    print("LAUNCHED", args)
+launch()
 PY
+)"
+CHECK_PY='import os; print("HAS_LOG" if os.path.exists("/content/run.log") else "NO_LOG")'
+for attempt in 1 2 3; do
+  printf '%s\n' "$LAUNCH_PY" | timeout "$LAUNCH_TIMEOUT" colab exec -s "$SESSION" --env "JOB_ARGS=$JOB_ARGS_JSON" \
+    || echo "[local] launch attempt $attempt did not return cleanly"
+  if printf '%s' "$CHECK_PY" | timeout "$CALL_TIMEOUT" colab exec -s "$SESSION" 2>/dev/null | grep -q HAS_LOG; then
+    echo "[local] job started (attempt $attempt)"; break
+  fi
+  echo "[local] job not started yet; retrying launch"; sleep 20
+done
 
 POLL_PY='
 import os

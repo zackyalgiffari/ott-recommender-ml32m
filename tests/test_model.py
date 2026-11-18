@@ -59,3 +59,12 @@ def test_loss_backward(toy_processed):
     loss = sampled_softmax_loss(m, inp, tgt, 0, 1, 7, n_neg=5)
     loss.backward()
     assert torch.isfinite(loss) and m.content_proj.weight.grad is not None
+
+
+def test_reset_cold_ids_matches_content_only_for_those_items(toy_processed):
+    m = make(toy_processed)
+    cold = torch.tensor([0, 5, 6])
+    assert m.reset_cold_ids(cold) == 2
+    full = m.item_vectors(torch.tensor([5, 6, 2]))
+    content = m.item_vectors(torch.tensor([5, 6, 2]), id_scale=0.0)
+    assert torch.allclose(full[:2], content[:2]) and not torch.allclose(full[2], content[2])

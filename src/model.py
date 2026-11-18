@@ -112,6 +112,20 @@ class HybridSASRec(
         if self.use_content:
             self.content = content.to(device=self.content.device, dtype=torch.float16).contiguous()
 
+    @torch.no_grad()
+    def reset_cold_ids(self, cold_idx: torch.Tensor) -> int:
+        """Zero the ID vectors of titles that never occurred in training.
+
+        Such titles are only ever seen as sampled negatives, so their ID vectors learn to push
+        them down. With the ID part zeroed they are ranked by content alone -- the path that
+        ID-dropout trains for.
+        """
+        if not self.use_id or not self.use_content:
+            return 0
+        cold_idx = cold_idx[cold_idx > 0]
+        self.id_emb.weight[cold_idx.to(self.id_emb.weight.device)] = 0.0
+        return int(cold_idx.numel())
+
     def content_vectors(self, emb: torch.Tensor) -> torch.Tensor:
         """Project raw encoder embeddings (e.g. of brand-new titles) into item space."""
         return self.content_proj(emb.to(self.content_proj.weight.dtype))
