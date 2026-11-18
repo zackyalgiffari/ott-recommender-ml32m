@@ -55,6 +55,7 @@ case "$MODE" in
     run id_only movielens,amazon --no-content
     run movielens_only movielens --domains movielens
     run amazon_only amazon --domains amazon
+    python -m src.ablations
     ;;
   *)
     echo "unknown mode $MODE"; exit 2 ;;
